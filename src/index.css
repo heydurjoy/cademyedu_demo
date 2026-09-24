@@ -8,6 +8,78 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Register theme tokens so colors can interpolate */
+@property --ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eef3f9;
+}
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #94a3b8;
+}
+@property --placeholder {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #64748b;
+}
+@property --bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #030b17;
+}
+@property --bg-soft {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #051426;
+}
+@property --surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.06);
+}
+@property --surface-strong {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.1);
+}
+@property --stroke {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.12);
+}
+@property --stroke-strong {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.18);
+}
+@property --chip-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(0, 0, 0, 0.2);
+}
+@property --glow-cyan {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(34, 211, 238, 0.1);
+}
+@property --glow-orange {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(249, 115, 22, 0.12);
+}
+@property --accent-cyan {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #22d3ee;
+}
+@property --accent-orange {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f97316;
+}
+
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
@@ -22,12 +94,11 @@
   --stroke-strong: rgba(255, 255, 255, 0.18);
   --shadow: 0 10px 36px rgba(0, 0, 0, 0.35);
   --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  --body-glow:
-    radial-gradient(1100px 560px at 85% -10%, rgba(34, 211, 238, 0.1), transparent 55%),
-    radial-gradient(900px 520px at -10% 20%, rgba(249, 115, 22, 0.12), transparent 50%),
-    linear-gradient(180deg, #051426 0%, #030b17 45%, #020810 100%);
-  --hero-scrim: linear-gradient(180deg, rgba(3, 11, 23, 0.5) 0%, rgba(3, 11, 23, 0.35) 40%, #030b17 100%);
+  --glow-cyan: rgba(34, 211, 238, 0.1);
+  --glow-orange: rgba(249, 115, 22, 0.12);
   --chip-bg: rgba(0, 0, 0, 0.2);
+  --accent-cyan: #22d3ee;
+  --accent-orange: #f97316;
   --theme-color: #030b17;
 }
 
@@ -44,19 +115,30 @@
   --stroke-strong: rgba(15, 23, 42, 0.26);
   --shadow: 0 16px 44px rgba(15, 23, 42, 0.14);
   --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --body-glow:
-    radial-gradient(1100px 560px at 85% -8%, rgba(8, 145, 178, 0.14), transparent 55%),
-    radial-gradient(900px 520px at -8% 18%, rgba(249, 115, 22, 0.14), transparent 50%),
-    linear-gradient(180deg, #eef2f7 0%, #eef2f7 45%, #e8edf5 100%);
-  --hero-scrim: linear-gradient(
-    180deg,
-    rgba(238, 242, 247, 0.72) 0%,
-    rgba(238, 242, 247, 0.5) 32%,
-    rgba(238, 242, 247, 0.82) 78%,
-    #eef2f7 100%
-  );
+  --glow-cyan: rgba(8, 145, 178, 0.14);
+  --glow-orange: rgba(249, 115, 22, 0.14);
   --chip-bg: rgba(15, 23, 42, 0.06);
+  --accent-cyan: #0e7490;
+  --accent-orange: #ea580c;
   --theme-color: #e8eef6;
+}
+
+html {
+  transition:
+    --ink 0.55s ease,
+    --muted 0.55s ease,
+    --placeholder 0.55s ease,
+    --bg 0.55s ease,
+    --bg-soft 0.55s ease,
+    --surface 0.55s ease,
+    --surface-strong 0.55s ease,
+    --stroke 0.55s ease,
+    --stroke-strong 0.55s ease,
+    --chip-bg 0.55s ease,
+    --glow-cyan 0.55s ease,
+    --glow-orange 0.55s ease,
+    --accent-cyan 0.55s ease,
+    --accent-orange 0.55s ease;
 }
 
 @layer base {
@@ -70,12 +152,44 @@
     margin: 0;
     font-family: var(--font-sans);
     color: var(--ink);
-    background: var(--body-glow);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(1100px 560px at 85% -10%, var(--glow-cyan), transparent 55%),
+      radial-gradient(900px 520px at -10% 20%, var(--glow-orange), transparent 50%);
     background-attachment: fixed;
+    transition:
+      color 0.55s ease,
+      background-color 0.55s ease;
   }
 
   * {
     box-sizing: border-box;
+  }
+
+  a,
+  button {
+    transition:
+      color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  a:active,
+  button:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Smooth theme crossfade when View Transitions API is available */
+@supports (view-transition-name: none) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.55s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
@@ -86,6 +200,11 @@
     box-shadow: var(--shadow), var(--glass-inset);
     backdrop-filter: saturate(160%) blur(22px);
     -webkit-backdrop-filter: saturate(160%) blur(22px);
+    transition:
+      background-color 0.55s ease,
+      border-color 0.55s ease,
+      box-shadow 0.55s ease,
+      color 0.55s ease;
   }
 
   .glass-strong {
@@ -94,27 +213,45 @@
     box-shadow: var(--shadow), var(--glass-inset);
     backdrop-filter: saturate(160%) blur(22px);
     -webkit-backdrop-filter: saturate(160%) blur(22px);
+    transition:
+      background-color 0.55s ease,
+      border-color 0.55s ease,
+      box-shadow 0.55s ease,
+      color 0.55s ease;
   }
 
   .ink {
     color: var(--ink);
+    transition: color 0.55s ease;
   }
 
   .muted {
     color: var(--muted);
+    transition: color 0.55s ease;
   }
 
   .stroke {
     border-color: var(--stroke);
+    transition: border-color 0.55s ease;
   }
 
   .chip {
     background: var(--chip-bg);
     border: 1px solid var(--stroke);
+    transition:
+      background-color 0.55s ease,
+      border-color 0.55s ease,
+      color 0.55s ease;
   }
 
   .hero-scrim {
-    background: var(--hero-scrim);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--bg) 50%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 35%, transparent) 40%,
+      var(--bg) 100%
+    );
+    transition: background 0.55s ease;
   }
 
   .hero-bottom-fade {
@@ -157,19 +294,13 @@
   }
 
   .accent-cyan {
-    color: #22d3ee;
+    color: var(--accent-cyan);
+    transition: color 0.55s ease;
   }
 
   .accent-orange {
-    color: #f97316;
-  }
-
-  [data-theme="light"] .accent-cyan {
-    color: #0e7490;
-  }
-
-  [data-theme="light"] .accent-orange {
-    color: #ea580c;
+    color: var(--accent-orange);
+    transition: color 0.55s ease;
   }
 
   .sr-only {
@@ -199,7 +330,7 @@
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -208,25 +339,38 @@
 }
 
 .page-enter {
-  animation: pageEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pageEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   transition:
-    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 .scroll-reveal.is-in {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  a:active,
+  button:active {
+    transform: none !important;
+  }
+
   .page-enter,
   .scroll-reveal {
     animation: none !important;

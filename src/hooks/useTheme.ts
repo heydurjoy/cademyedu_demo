@@ -20,6 +20,17 @@ function applyTheme(theme: Theme) {
   if (meta) meta.setAttribute('content', theme === 'light' ? '#eef2f7' : '#030B17')
 }
 
+function runThemeChange(apply: () => void) {
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { finished: Promise<void> }
+  }
+  if (typeof doc.startViewTransition === 'function') {
+    doc.startViewTransition(apply)
+    return
+  }
+  apply()
+}
+
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() =>
     typeof document !== 'undefined' ? readTheme() : 'dark',
@@ -35,7 +46,10 @@ export function useTheme() {
     } catch {
       /* ignore */
     }
-    setThemeState(next)
+    runThemeChange(() => {
+      applyTheme(next)
+      setThemeState(next)
+    })
   }, [])
 
   const toggleTheme = useCallback(() => {

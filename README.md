@@ -9,40 +9,37 @@ npm install
 npm run dev
 ```
 
-## Build for GitHub Pages
+Open the local URL (usually `http://localhost:5173/`).
+
+## Why GitHub looked blank
+
+GitHub serves `index.html` as static files. The source file points at `/src/main.tsx`, which **only works with `npm run dev`**. Visitors need the **built** app from `dist/` (deployed via GitHub Pages).
+
+## GitHub Pages
+
+This repo includes `.github/workflows/deploy-pages.yml`. After you push to `main`:
+
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
+2. Wait for the **Deploy GitHub Pages** workflow to finish (Actions tab)
+3. Open: `https://heydurjoy.github.io/cademyedu_clone/#/`
+
+### Manual deploy (optional)
 
 ```bash
 npm run build
-```
-
-Output is in `dist/`. Config already uses:
-
-- `base: './'` in `vite.config.ts`
-- `HashRouter` for deep links without server rewrites
-- `public/.nojekyll`
-
-### Deploy
-
-1. Push this repo to GitHub.
-2. Settings → Pages → Deploy from a branch, **or** use a workflow that publishes `dist/`.
-3. For project sites, open `https://<user>.github.io/<repo>/#/` after deploy.
-
-Optional one-liner with [gh-pages](https://www.npmjs.com/package/gh-pages) after build:
-
-```bash
 npx gh-pages -d dist
 ```
 
+Then set Pages to the `gh-pages` branch.
+
 ## Demo tips
 
-- Use **Experience as** pills or the glass nav portals.
+- Use **Experience as** cards or the glass nav portals.
 - **Reset Demo** restores seed data.
 - Admin **Toggle Due/Paid** and Student/Parent **Pay** share the same Zustand store (`cademyos-demo` in localStorage).
-- Theme toggle is a visual placeholder (dark UI only).
+- Theme toggle crossfades light/dark via CSS variables.
 
 ## Brand assets
 
 - `public/assets/logo.png`
 - `public/assets/hero.jpg`
-
-Legacy HTTrack / vanilla mirror files live under `_archive/` and are not part of the app build.

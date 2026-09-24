@@ -36,7 +36,7 @@ export function ScrollRevealRoot({ children }: { children: ReactNode }) {
           io?.observe(el)
         })
       })
-    }, 280)
+    }, 200)
 
     return () => {
       cancelled = true
