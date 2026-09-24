@@ -21,7 +21,7 @@ This repo includes `.github/workflows/deploy-pages.yml`. After you push to `main
 
 1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
 2. Wait for the **Deploy GitHub Pages** workflow to finish (Actions tab)
-3. Open: `https://heydurjoy.github.io/cademyedu_clone/#/`
+3. Open: `https://heydurjoy.github.io/cademyedu_demo/#/`
 
 ### Manual deploy (optional)
 
